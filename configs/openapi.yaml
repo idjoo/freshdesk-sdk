@@ -36,6 +36,30 @@ paths:
           description: Successful operation
       tags:
       - Tickets
+  /tickets/{id}/reply:
+    post:
+      operationId: create_reply
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReplyRequests'
+        description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversations'
+          description: Successful operation
+      tags:
+      - Tickets
 components:
   schemas:
     Conversations:

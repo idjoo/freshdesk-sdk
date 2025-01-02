@@ -5,19 +5,21 @@ import httpx
 
 from ... import errors
 from ...client import Client
-from ...models.ticket_base import TicketBase
+from ...models.conversations import Conversations
+from ...models.create_reply_requests import CreateReplyRequests
 from ...types import Response
 
 
 def _get_kwargs(
+    id: int,
     *,
-    body: TicketBase,
+    body: CreateReplyRequests,
 ) -> dict[str, Any]:
     headers: dict[str, Any] = {}
 
     _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": "/tickets",
+        "url": f"/tickets/{id}/reply",
     }
 
     _body = body.to_dict()
@@ -29,9 +31,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Client, response: httpx.Response) -> Optional[TicketBase]:
+def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Conversations]:
     if response.status_code == 200:
-        response_200 = TicketBase.from_dict(response.json())
+        response_200 = Conversations.from_dict(response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -40,7 +42,7 @@ def _parse_response(*, client: Client, response: httpx.Response) -> Optional[Tic
         return None
 
 
-def _build_response(*, client: Client, response: httpx.Response) -> Response[TicketBase]:
+def _build_response(*, client: Client, response: httpx.Response) -> Response[Conversations]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -50,23 +52,26 @@ def _build_response(*, client: Client, response: httpx.Response) -> Response[Tic
 
 
 def sync_detailed(
+    id: int,
     *,
     client: Client,
-    body: TicketBase,
-) -> Response[TicketBase]:
+    body: CreateReplyRequests,
+) -> Response[Conversations]:
     """
     Args:
-        body (TicketBase):
+        id (int):
+        body (CreateReplyRequests):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[TicketBase]
+        Response[Conversations]
     """
 
     kwargs = _get_kwargs(
+        id=id,
         body=body,
     )
 
@@ -78,46 +83,52 @@ def sync_detailed(
 
 
 def sync(
+    id: int,
     *,
     client: Client,
-    body: TicketBase,
-) -> Optional[TicketBase]:
+    body: CreateReplyRequests,
+) -> Optional[Conversations]:
     """
     Args:
-        body (TicketBase):
+        id (int):
+        body (CreateReplyRequests):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        TicketBase
+        Conversations
     """
 
     return sync_detailed(
+        id=id,
         client=client,
         body=body,
     ).parsed
 
 
 async def asyncio_detailed(
+    id: int,
     *,
     client: Client,
-    body: TicketBase,
-) -> Response[TicketBase]:
+    body: CreateReplyRequests,
+) -> Response[Conversations]:
     """
     Args:
-        body (TicketBase):
+        id (int):
+        body (CreateReplyRequests):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[TicketBase]
+        Response[Conversations]
     """
 
     kwargs = _get_kwargs(
+        id=id,
         body=body,
     )
 
@@ -127,24 +138,27 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    id: int,
     *,
     client: Client,
-    body: TicketBase,
-) -> Optional[TicketBase]:
+    body: CreateReplyRequests,
+) -> Optional[Conversations]:
     """
     Args:
-        body (TicketBase):
+        id (int):
+        body (CreateReplyRequests):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        TicketBase
+        Conversations
     """
 
     return (
         await asyncio_detailed(
+            id=id,
             client=client,
             body=body,
         )

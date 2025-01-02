@@ -1,9 +1,15 @@
 paths:
-  /tickets:
+  /tickets/{id}/reply:
     post:
       operationId: create_reply
       tags:
-        - Conversations
+        - Tickets
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
       requestBody:
         description: ""
         content:
