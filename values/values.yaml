@@ -1,11 +1,14 @@
-version: v2
+version: v0.0.1
 openapi:
   version: 3.1.0
-  title: ID - Smartfren - CCAI API
+  title: Freshdesk SDK
   contact:
-    email: "adrianus.vian.habirowo@devoteam.com"
+    email: "vian@idjo.cc"
 servers:
-  - example.freshdesk.com
+  - url: https://{domain}.freshdesk.com/api/v2
+    variables:
+      domain:
+        default: example
 tags:
   - name: Tickets
     description: |-

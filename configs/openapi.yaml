@@ -4,16 +4,18 @@
 
 openapi: 3.1.0
 info:
-  title: ID - Smartfren - CCAI API
+  title: Freshdesk SDK
   description: ""
   contact:
-    email: adrianus.vian.habirowo@devoteam.com
-  version: v2
-basePath: /api/v2
+    email: vian@idjo.cc
+  version: v0.0.1
 schemes:
-    - https
-servers:
-  - url: example.freshdesk.com
+  - https
+servers: 
+  - url: https://{domain}.freshdesk.com/api/v2
+    variables:
+      domain:
+        default: example
 tags:
   - name: Tickets
     description: A ticket is an issue raised by a requester that need to be solved. It could be an urgent, high-priority problem exposing a security vulnerability. It could also be low priority question about a free T-shirt. Tickets are assigned to agents based on the agent's expertise and on the subject of the ticket.
@@ -33,6 +35,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Ticket'
+          description: Successful operation
+      tags:
+      - Tickets
+  /tickets/{id}/reply:
+    post:
+      operationId: create_reply
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReplyRequests'
+        description: ""
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversations'
           description: Successful operation
       tags:
       - Tickets

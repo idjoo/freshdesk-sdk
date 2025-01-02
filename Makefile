@@ -1,7 +1,4 @@
 HELM_VALUES_DIR = values
-PROJECT_ID = smartfren-chatbot-dev
-REGION = asia-southeast2
-REGISTRY = python
 
 ROOT_DIR := $(shell git rev-parse --show-toplevel)
 TEMP_DIR := $(shell mktemp -d)
@@ -30,17 +27,3 @@ generate:
 		"$(TEMP_DIR)/pyproject.toml" "$(TEMP_DIR)/README.md" "$(ROOT_DIR)/"
 
 	rm -rf "$(TEMP_DIR)/"
-
-
-.PHONY: publish
-publish:
-	[ -d "$(ROOT_DIR)/dist" ] && rm -rf "$(ROOT_DIR)/dist" || true
-
-	uv build
-
-	uv publish \
-		--username oauth2accesstoken \
-		--password "$(ACCESS_TOKEN)" \
-		--publish-url "https://$(REGION)-python.pkg.dev/$(PROJECT_ID)/$(REGISTRY)"
-
-	rm -rf "$(ROOT_DIR)/dist"

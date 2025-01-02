@@ -2,18 +2,14 @@
 
 openapi: {{ .Values.openapi.version }}
 info:
-  title: ID - Smartfren - CCAI API
+  title: {{ .Values.openapi.title }}
   description: ""
   contact:
     {{- .Values.openapi.contact | toYaml | nindent 4 }}
   version: {{ .Values.version }}
-basePath: /api/v2
 schemes:
-    - https
-servers:
-  {{- range .Values.servers }}
-  - url: {{ . }}
-  {{- end }}
+  - https
+servers: {{ .Values.servers | toYaml | nindent 2 }}
 tags:
   {{- range .Values.tags }}
   - name: {{ .name }}
