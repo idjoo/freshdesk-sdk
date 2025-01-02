@@ -10,3 +10,6 @@ tags:
   - name: Tickets
     description: |-
       A ticket is an issue raised by a requester that need to be solved. It could be an urgent, high-priority problem exposing a security vulnerability. It could also be low priority question about a free T-shirt. Tickets are assigned to agents based on the agent's expertise and on the subject of the ticket.
+  - name: Conversations
+    description: |-
+      Conversations consist of replies as well as public and private notes added to a ticket. Notes are non-invasive ways of sharing updates about a ticket amongst agents and customers. Private notes are for collaboration between agents and are not visible to the customer. Public notes are visible to, and can be created by, both customers and agents.
