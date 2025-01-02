@@ -1,0 +1,12 @@
+version: v2
+openapi:
+  version: 3.1.0
+  title: ID - Smartfren - CCAI API
+  contact:
+    email: "adrianus.vian.habirowo@devoteam.com"
+servers:
+  - example.freshdesk.com
+tags:
+  - name: Tickets
+    description: |-
+      A ticket is an issue raised by a requester that need to be solved. It could be an urgent, high-priority problem exposing a security vulnerability. It could also be low priority question about a free T-shirt. Tickets are assigned to agents based on the agent's expertise and on the subject of the ticket.

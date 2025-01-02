@@ -1,0 +1,103 @@
+paths:
+  /tickets:
+    post:
+      operationId: create_reply
+      tags:
+        - Conversations
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReplyRequests"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Conversations"
+schemas:
+  Conversations:
+    type: object
+    properties:
+      attachments:
+        type: array
+        description: Ticket attachments. The total size of these attachments cannot exceed 20MB.
+        items:
+          type: string
+          format: binary
+      body:
+        type: string
+        description: Content of the conversation in HTML.
+      body_text:
+        type: string
+        description: Content of the conversation in plain text.
+      id:
+        type: number
+        description: ID of the conversation.
+      incoming:
+        type: boolean
+        description: Set to true if a particular conversation should appear as being created from outside (i.e., not through web portal).
+      to_emails:
+        type: array
+        description: Email addresses of agents/users who need to be notified about this conversation.
+        items:
+          type: string
+      private:
+        type: boolean
+        description: Set to true if the note is private.
+      source:
+        type: number
+        description: Denotes the type of the conversation.
+      support_email:
+        type: string
+        description: Email address from which the reply is sent. For notes, this value will be null.
+      ticket_id:
+        type: number
+        description: ID of the ticket to which this conversation is being added.
+      user_id:
+        type: number
+        description: ID of the agent/user who is adding the conversation.
+      last_edited_at:
+        type: string
+        format: date-time
+        description: Timestamp when the conversation last edited.
+      last_edited_user_id:
+        type: string
+        format: date-time
+        description: ID of the agent who has last edited the conversation.
+      created_at:
+        type: string
+        format: date-time
+        description: Conversation creation timestamp.
+      updated_at:
+        type: string
+        format: date-time
+        description: Conversation updated timestamp.
+  CreateReplyRequests:
+    type: object
+    required:
+      - body
+    properties:
+      body:
+        type: string
+        description: Content of the note in HTML format.
+      attachments:
+        type: array
+        description: Ticket attachments. The total size of these attachments cannot exceed 20MB.
+        items:
+          type: string
+          format: binary
+      from_email:
+        type: string
+        description: The email address from which the reply is sent. By default the global support email will be used.
+      user_id:
+        type: string
+        description: ID of the agent who is adding the note.
+      cc_emails:
+        type: string
+        description: Email address added in the 'cc' field of the outgoing ticket email.
+      bcc_emails:
+        type: string
+        description: Email address added in the 'bcc' field of the outgoing ticket email.

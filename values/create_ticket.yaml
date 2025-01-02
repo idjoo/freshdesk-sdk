@@ -1,0 +1,183 @@
+paths:
+  /tickets:
+    post:
+      operationId: create_ticket
+      tags:
+        - Tickets
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTicketRequest"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+schemas:
+  TicketBase:
+    type: object
+    properties:
+      attachments:
+        type: array
+        description: Ticket attachments. The total size of these attachments cannot exceed 20MB.
+        items:
+          type: string
+          format: binary
+      cc_emails:
+        type: array
+        description: Email address added in the 'cc' field of the incoming ticket email.
+        items:
+          type: string
+      company_id:
+        type: number
+        description: Company ID of the requester. This attribute can only be set if the Multiple Companies feature is enabled (Estate plan and above).
+      deleted:
+        type: boolean
+        description: Set to true if the ticket has been deleted/trashed. Deleted tickets will not be displayed in any views except the "deleted" filter.
+      description:
+        type: string
+        description: HTML content of the ticket.
+      description_text:
+        type: string
+        description: Content of the ticket in plain text.
+      due_by:
+        type: string
+        format: date-time
+        description: Timestamp that denotes when the ticket is due to be resolved.
+      email:
+        type: string
+        format: email
+        description: Email address of the requester. If no contact exists with this email address in Freshdesk, it will be added as a new contact.
+      email_config_id:
+        type: number
+        description: ID of email config which is used for this ticket. (i.e., support@yourcompany.com/sales@yourcompany.com).
+      facebook_id:
+        type: string
+        description: Facebook ID of the requester. A contact should exist with this facebook_id in Freshdesk.
+      fr_due_by:
+        type: string
+        format: date-time
+        description: Timestamp that denotes when the first response is due.
+      fr_escalated:
+        type: boolean
+        description: Set to true if the ticket has been escalated as the result of first response time being breached.
+      fwd_emails:
+        type: array
+        description: Email address(e)s added while forwarding a ticket.
+        items:
+          type: string
+      group_id:
+        type: number
+        description: ID of the group to which the ticket has been assigned.
+      id:
+        type: number
+        description: Unique ID of the ticket.
+      is_escalated:
+        type: boolean
+        description: Set to true if the ticket has been escalated for any reason.
+      name:
+        type: string
+        description: Name of the requester.
+      phone:
+        type: string
+        description: Phone number of the requester. If no contact exists with this phone number in Freshdesk, it will be added as a new contact. If the phone number is set and the email address is not, then the name attribute is mandatory.
+      priority:
+        type: number
+        description: Priority of the ticket.
+      product_id:
+        type: number
+        description: ID of the product to which the ticket is associated. It will be ignored if the email_config_id attribute is set in the request.
+      reply_cc_emails:
+        type: array
+        description: Email address added while replying to a ticket.
+        items:
+          type: string
+      requester_id:
+        type: string
+        description: User ID of the requester. For existing contacts, the requester_id can be passed instead of the requester's email.
+      responder_id:
+        type: number
+        description: ID of the agent to whom the ticket has been assigned.
+      source:
+        type: number
+        description: The channel through which the ticket was created.
+      spam:
+        type: boolean
+        description: Set to true if the ticket has been marked as spam.
+      status:
+        type: number
+        description: Status of the ticket.
+      subject:
+        type: string
+        description: Subject of the ticket.
+      tags:
+        type: array
+        description: Tags that have been associated with the ticket.
+        items:
+          type: string
+      to_emails:
+        type: array
+        description: Email addresses to which the ticket was originally sent.
+        items:
+          type: string
+      twitter_id:
+        type: string
+        description: Twitter handle of the requester. If no contact exists with this handle in Freshdesk, it will be added as a new contact.
+      type:
+        type: string
+        description: Helps categorize the ticket according to the different kinds of issues your support team deals with.
+      created_at:
+        type: string
+        format: date-time
+        description: Ticket creation timestamp.
+      updated_at:
+        type: string
+        format: date-time
+        description: Ticket updated timestamp.
+  Ticket:
+    allOf:
+      - $ref: "#/components/schemas/TicketBase"
+  CreateTicketRequest:
+    allOf:
+      - $ref: "#/components/schemas/TicketBase"
+    type: object
+    properties:
+      unique_external_id:
+        type: string
+        description: External ID of the requester. If no contact exists with this external ID in Freshdesk, they will be added as a new contact.
+      subject:
+        type: string
+        description: Subject of the ticket. The default Value is null.
+        default: null
+      type:
+        type: string
+        description: Helps categorize the ticket according to the different kinds of issues your support team deals with. The default Value is null.
+        default: null
+      status:
+        type: number
+        description: Status of the ticket. The default Value is 2.
+        default: 2
+      priority:
+        type: number
+        description: Priority of the ticket. The default value is 1.
+        default: 1
+      source:
+        type: number
+        description: The channel through which the ticket was created. The default value is 2.
+        default: 2
+      parent_id:
+        type: number
+        description: ID of the parent ticket that this ticket should be linked to. When passing this field, the current ticket actioned upon will be converted to a child ticket.
+      internal_agent_id:
+        type: integer
+        description: ID of the internal agent which the ticket should be assigned with.
+      internal_group_id:
+        type: integer
+        description: ID of the internal group to which the ticket should be assigned with.
+      lookup_parameter:
+        type: string
+        description: This attribute for tickets can only be set if Custom Objects is enabled and a lookup field has been added under ticket fields.The value can either be in the form of the display_id (record id) or primary_field_value (user defined record value). The default value is display_id.

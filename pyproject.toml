@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "freshdesk-sdk"
+version = "v2"
+description = "A client library for accessing ID - Smartfren - CCAI API"
+authors = []
+readme = "README.md"
+packages = [
+    {include = "freshdesk"},
+]
+include = ["CHANGELOG.md", "freshdesk/py.typed"]
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+httpx = ">=0.20.0,<0.29.0"
+attrs = ">=22.2.0"
+python-dateutil = "^2.8.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["F", "I", "UP"]
