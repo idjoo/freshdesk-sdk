@@ -29,7 +29,7 @@ schemas:
     properties:
       attachments:
         type: array
-        description:Attachments. The total size of all the ticket's attachments cannot exceed 20MB. 
+        description: Attachments. The total size of all the ticket's attachments cannot exceed 20MB. 
         items:
           type: string
           format: binary
