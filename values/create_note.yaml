@@ -1,0 +1,64 @@
+paths:
+  /tickets/{id}/reply:
+    post:
+      operationId: create_note
+      tags:
+        - Tickets
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNoteRequests"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Conversations"
+schemas:
+  Conversations:
+    type: object
+    properties:
+      attachments:
+        type: array
+        description:Attachments. The total size of all the ticket's attachments cannot exceed 20MB. 
+        items:
+          type: string
+          format: binary
+      body:
+        type: string
+        description: Content of the note in HTML format.
+  CreateNoteRequests:
+    type: object
+    required:
+      - body
+    properties:
+      body:
+        type: string
+        description: Content of the note in HTML format.
+      attachments:
+        type: array
+        description: Ticket attachments. The total size of these attachments cannot exceed 20MB.
+        items:
+          type: string
+          format: binary
+      from_email:
+        type: string
+        description: The email address from which the reply is sent. By default the global support email will be used.
+      user_id:
+        type: string
+        description: ID of the agent who is adding the note.
+      cc_emails:
+        type: string
+        description: Email address added in the 'cc' field of the outgoing ticket email.
+      bcc_emails:
+        type: string
+        description: Email address added in the 'bcc' field of the outgoing ticket email.
