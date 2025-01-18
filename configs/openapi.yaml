@@ -125,6 +125,34 @@ components:
           description: ID of the agent/user who is adding the conversation.
           type: number
       type: object
+    CreateNoteRequests:
+      properties:
+        attachments:
+          description: Ticket attachments. The total size of these attachments cannot
+            exceed 20MB.
+          items:
+            format: binary
+            type: string
+          type: array
+        bcc_emails:
+          description: Email address added in the 'bcc' field of the outgoing ticket email.
+          type: string
+        body:
+          description: Content of the note in HTML format.
+          type: string
+        cc_emails:
+          description: Email address added in the 'cc' field of the outgoing ticket email.
+          type: string
+        from_email:
+          description: The email address from which the reply is sent. By default the
+            global support email will be used.
+          type: string
+        user_id:
+          description: ID of the agent who is adding the note.
+          type: string
+      required:
+      - body
+      type: object
     CreateReplyRequests:
       properties:
         attachments:
